@@ -16,7 +16,8 @@ const botsSchema = new mongoose.Schema({
   },
   logo: {
     type: String,
-    required: true
+    required: true,
+    default: "https://media.pocketgamer.biz/2021/5/110514/discord-new-logo-2021-r225x.jpg"
   },
   invite: {
     type: String
@@ -47,7 +48,8 @@ const botsSchema = new mongoose.Schema({
     default: "unverified"
   },
   support: {
-    type: String
+    type: String,
+    required: true
   },
   website: {
     type: String
