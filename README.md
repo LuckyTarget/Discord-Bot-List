@@ -6,14 +6,23 @@ Astra Bot List is an open-source!nt branch may have newer additions/features, bu
 ### Do you need help? Join our [Discord Server](https://astrabots.xyz/join)
 
 ## New Features added!
-14+ Changes [Some of them]
-+ Profile Changes
-+ Animated Banner
-+ New Home Screen 
-+ Different Bot Cards
-+ New Navigation Bar
++ Footer Changed
++ Readme Updated
++ Some Home Screen Changes
++ Navigation bar is fixed on all pages
++ Theme color changed
+- Bot commands updated
+- Bot Theme Color Updated
+- Bot **certify**/**uncertify** added!
 
+**[Feature additions]**
+- Custom Bot's banner card
+- Custom Bot's page theme
+- Profile (**/me**) custom bio
++ Bot Comments
 - Fixed navigation bugs
+
+
 # ScreenShots
 <p align="center">
   <img src="https://user-images.githubusercontent.com/39243722/119623542-f428c980-be10-11eb-90e1-79025102b715.png">
@@ -47,6 +56,10 @@ Start the bot-list `npm start` :)
 **4.** On `Redirects` add your website `domain/api/callback` [Eg. `https://astrabots.xyz/api/callback`]
 
 **5.** Click `Save`
+
+# All Image location
+`src/public/assets/img/`
+[Make sure to keep names as it is]
 
 # MongoURL Value
 **1.** Visit [MongoDB](https://www.mongodb.com/)
