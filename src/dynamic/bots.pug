@@ -7,7 +7,6 @@ include includes/nav.pug
   meta(property='twitter:description', content=bot.description)
   meta(name='og:image', content=bot.logo)
   meta(name='twitter:image', content=bot.logo)
-  script(src='/cdn-cgi/apps/head/gNPnKtrHwcCWtwVUctK98NhZqUk.js')
   meta(name='author', content='Astra Bots')
   meta(name='theme-color', content='#171717')
   meta(name='og:site_name', content='Astra Bots')
@@ -62,7 +61,7 @@ include includes/nav.pug
 .bg-dark.hugething.text-center(style='box-shadow:0 5px 10px #1b1b1b;')
   br
   br
-  img.botlogoimg(width='100px' height='100px' src=bot.logo)
+  img.botlogoimg(style='width:100px;height:100px; border-radius:50%;', alt='Bot Avatar', src=bot.logo)
   br
   h1#fat.mb-0 #{bot.username}
   span #{bot.description}
@@ -208,7 +207,7 @@ br
             i.fab.fa-github
            span.btnicon-content Github
         else 
-          a.btn.btn-dark.btn-block.btn-icon
+          a.btn.btn-info.btn-block.btn-icon
            .btnicon-icon
             i.fas.fa-times
            span.btnicon-content Github Not Set
@@ -218,7 +217,7 @@ br
             i.fas.fa-Globe
            span.btnicon-content Website
         else
-          a.btn.btn-dark.btn-block.btn-icon
+          a.btn.btn-success.btn-block.btn-icon
            .btnicon-icon
             i.fas.fa-times
            span.btnicon-content Website Not Set
@@ -228,7 +227,7 @@ br
               i.fas.fa-mouse
             span.btnicon-content Discord Server
         else
-          a.btn.btn-dark.btn-block.btn-icon
+          a.btn.btn-danger.btn-block.btn-icon
            .btnicon-icon
             i.fas.fa-times
            span.btnicon-content Discord Server Not Set
@@ -254,7 +253,7 @@ script.
 
 style.
   .featuresec {
-  height: 300px;
+  height: 200px;
   display: flex;
   align-items: center;
   }
@@ -270,14 +269,11 @@ style.
   }
   .hugething,
   .navbar {
-  background: linear-gradient(90deg, #ff5050, #303030, #303030, #3366ff);
+  background: linear-gradient(90deg, #3366ff, #8000ff, #4d79ff, #0039e6);
   background-size: 600% 600%;
   -webkit-animation: jumboani 10s ease infinite;
   -moz-animation: jumboani 10s ease infinite;
   animation: jumboani 10s ease infinite;
-  }
-  #fat {
-    font-weight: 700;
   }
   .dumbfuckingimage {
   height: 100%;
@@ -314,4 +310,99 @@ style.
   100% {
   background-position: 0% 50%
   }
+  }
+  @media (max-width: 991px) {
+  .featuresec {
+  text-align: center !important;
+  height: auto;
+  }
+  hr {
+  margin: 50px 0;
+  }
+  .dumbfuckingimage {
+  height: auto;
+  }
+  }
+  .display-4 {
+  font-size: 30px !important;
+  }
+  .dank {
+  background: linear-gradient(90deg, rgba(248, 72, 61, 1) 0%, rgba(228, 46, 103, 1) 100%);
+  color: #fff !important;
+  transition: .3s;
+  }
+  .dank:hover {
+  background: #fff !important;
+  color: #7495e6 !important;
+  transition: .3s;
+  }
+  @keyframes hover {
+  0% {
+  transform: translateY(0px);
+  box-shadow: 0 10px 15px rgba(22, 22, 22, 0.5);
+  }
+  50% {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px rgba(22, 22, 22, 0.5);
+  }
+  100% {
+  transform: translateY(0px);
+  box-shadow: 0 10px 15px rgba(22, 22, 22, 0.5);
+  }
+  }
+  .bot-img {
+  border-radius: 50%;
+  animation: hover 5s ease-in-out infinite;
+  }
+  /*Removes cursor that comes with typed.js*/
+  /*Custom cursor animation*/
+  @-webkit-keyframes blink {
+  0% {
+  opacity: 1;
+  }
+  50% {
+  opacity: 0;
+  }
+  100% {
+  opacity: 1;
+  }
+  }
+  @-moz-keyframes blink {
+  0% {
+  opacity: 1;
+  }
+  50% {
+  opacity: 0;
+  }
+  100% {
+  opacity: 1;
+  }
+  }
+  li {
+  color: #fff !important;
+  }
+  .cont {
+  border: 1px solid #2C2F33;
+  border-radius: 2px;
+  }
+  .jumbotron h1 {
+  font-weight: 700;
+  color: #fff !important;
+  font-size: 100px;
+  }
+  .sub {
+  font-size: 18px;
+  color: #fff !important;
+  }
+  .lead {
+  color: #fff !important;
+  }
+  .smol {
+  width: 200px;
+  }
+  #fat {
+  font-weight: 700;
+  }
+  small {
+  color: #969696;
   }

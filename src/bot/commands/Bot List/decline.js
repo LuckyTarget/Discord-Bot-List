@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const Bots = require("@models/bots");
 
 const { server: { mod_log_id, role_ids } } = require("@root/config.json");
-
+const perms = require("@root/config.json");
 const reasons = {
   "1": `Your bot went offline during testing.`,
   "2": `Your bot seems to be an unmodified. We don't allow unmodified clones of other bots.`,
@@ -23,7 +23,6 @@ module.exports = class extends Command {
       name: 'decline',
       aliases: ["deny"],
       runIn: ['text'],
-      permissionLevel: 8,
       botPerms: ["SEND_MESSAGES"],
       description: "Decline a bot from the botlist",
       usage: '[Member:user]'
@@ -31,6 +30,25 @@ module.exports = class extends Command {
   }
 
   async run(message, [Member]) {
+
+    let bot1 = await Bots.findOne({ botid: Member.id }, { _id: false });
+
+    if(bot1 === null)
+        return message.channel.send({
+            embed: {
+                color: 'RED',
+                description: `${message.author} This bot is not on our botlist`,
+                timestamp: new Date(),
+            }
+        });
+    if (!perms.server.botreviewer.includes(message.author.id)) 
+        return message.channel.send({
+                embed: {
+                    color: 'RED',
+                    description: `${message.author}, You do not have enough permissions to run this command.`,
+                    timestamp: new Date(),
+                }
+            });
     if (!Member || !Member.bot) return message.channel.send(`You didn't ping a bot to decline.`)
     let e = new MessageEmbed()
       .setTitle('Decline Reasons')
@@ -55,6 +73,7 @@ module.exports = class extends Command {
     }
 
     let bot = await Bots.findOne({ botid: Member.id }, { _id: false });
+
     await Bots.updateOne({ botid: Member.id }, { $set: { state: "deleted", owners: { primary: bot.owners.primary, additional: [] } } });
     const botUser = await this.client.users.fetch(Member.id);
 
@@ -71,11 +90,11 @@ module.exports = class extends Command {
       .setColor('#FF4200')
     modLog.send(e)
     modLog.send(owners.map(x => x ? `<@${x}>` : "")).then(m => { m.delete() });
-    message.channel.send(`Bot <@${bot.botid}> had been declined successfully.`)
+    message.channel.send(`Bot <@${bot.botid}> has been declined successfully.`)
 
     owners = await message.guild.members.fetch({ user: owners })
     owners.forEach(o => {
-      o.send(`Your bot \`${bot.username}\` / <@${bot.botid}> was declined by reviewer ${message.author}.\nReason: ${r}\nIf you would like to dispute your decline, please DM ${message.author} (User ID: ${message.author.id})`)
+      o.send(`Your bot \`${bot.username}\` / <@${bot.botid}> has been declined by reviewer ${message.author}.\nReason: ${r}\nIf you would like to dispute your decline, please DM ${message.author} (User ID: ${message.author.id})`)
     })
     if (!message.client.users.cache.find(u => u.id === bot.botid).bot) return;
     try {

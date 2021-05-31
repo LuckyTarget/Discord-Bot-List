@@ -1,4 +1,5 @@
 head(cfapps-selector='head')
+  script(src="/assets/js/me.js")
   script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js')
   meta(property='og:url', content='https://astrabots.xyz/fr?updateLanguage=true')
   link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
@@ -33,6 +34,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.p-2.pl-4.pr-4.mainnav(style='background:
          a(style='text-decoration:none!important;', href='/login')
           li.nav-item
             span.nav-link Login
+
             
       #google_translate_element
         script(type='text/javascript').
@@ -198,27 +200,28 @@ style.
   75%  {box-shadow:-10px 0 10px #0A0A0A;}
   100% {box-shadow:0 10px 10px #0A0A0A;} */
   }
-script.
-  $('.nvhome').addClass('active');
 
-script.
-  // disable right click
-  document.addEventListener('contextmenu', event => event.preventDefault());
-  document.onkeydown = function (e) {
-  // disable F12 key
-  if(e.keyCode == 123) {
-  return false;
-  }
-  // disable I key
-  if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
-  return false;
-  }
-  // disable J key
-  if(e.ctrlKey && e.shiftKey && e.keyCode == 74) {
-  return false;
-  }
-  // disable U key
-  if(e.ctrlKey && e.keyCode == 85) {
-  return false;
-  }
-  }
+// script.
+//   $('.nvhome').addClass('active');
+
+// script.
+//   // disable right click
+//   document.addEventListener('contextmenu', event => event.preventDefault());
+//   document.onkeydown = function (e) {
+//   // disable F12 key
+//   if(e.keyCode == 123) {
+//   return false;
+//   }
+//   // disable I key
+//   if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
+//   return false;
+//   }
+//   // disable J key
+//   if(e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+//   return false;
+//   }
+//   // disable U key
+//   if(e.ctrlKey && e.keyCode == 85) {
+//   return false;
+//   }
+//   }

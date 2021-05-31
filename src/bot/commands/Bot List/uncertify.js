@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const Bots = require("@models/bots");
 const Users = require("@models/users");
 const { server: { mod_log_id, role_ids, admin_user_ids } } = require("@root/config.json");
+const perms = require("@root/config.json");
 const reasons = {
   "1": `Your bot went offline during testing.`,
   "2": `Your bot seems to be an unmodified. We don't allow unmodified clones of other bots.`,
@@ -22,13 +23,19 @@ module.exports = class extends Command {
       runIn: ['text'],
       aliases: ["uncert"],
       description: "Uncertify's a bot",
-      permissionLevel: 8,
       usage: '[User:user]'
     });
   }
 
   async run(message, [user]) {
-
+    if (!perms.server.botreviewer.includes(message.author.id)) 
+    return message.channel.send({
+            embed: {
+                color: 'RED',
+                description: `${message.author}, You do not have enough permissions to run this command.`,
+                timestamp: new Date(),
+            }
+        });
 
 
 
@@ -46,9 +53,23 @@ module.exports = class extends Command {
 
     if (!user || !user.bot) return message.channel.send(`Ping a **bot**.`);
 
-
+   
     let bot = await Bots.findOne({ botid: user.id }, { _id: false });
+    if(bot === null)
+    return message.channel.send({
+        embed: {
+            color: 'RED',
+            description: `${message.author} This bot is not on our botlist`,
+        }
+    });
 
+    if(bot.certify === false)
+    return message.channel.send({
+        embed: {
+            color: 'RED',
+            description: `${message.author}, \`${bot.username}\` is already un-certify`,
+        }
+    });
 
 
     const botUser = await this.client.users.fetch(user.id);
@@ -81,7 +102,7 @@ module.exports = class extends Command {
       o.send(`Your bot \`${bot.username}\` / <@${bot.botid}> has been Un-certified.`)
     })
     message.guild.members.fetch(message.client.users.cache.find(u => u.id === bot.botid)).then(bot => {
-      bot.roles.set([role_ids.cert_bot, role_ids.bot]);
+      bot.roles.set([role_ids.bot, role_ids.verified]);
     })
     message.channel.send(`Uncertified \`${bot.username}\``);
 

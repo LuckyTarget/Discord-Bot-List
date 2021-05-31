@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const Bots = require("@models/bots");
 const Users = require("@models/users");
 const { server: { mod_log_id, role_ids, admin_user_ids} } = require("@root/config.json");
+const perms = require("@root/config.json");
 var modLog;
 
 module.exports = class extends Command {
@@ -16,11 +17,23 @@ module.exports = class extends Command {
     }
 
     async run(message, [user]) {
-
-	//if (!admin_user_ids.includes(message.author.id)) return
+	if (!perms.server.botreviewer.includes(message.author.id)) 
+    return message.channel.send({
+                embed: {
+                    color: 'RED',
+                    description: `${message.author}, You do not have enough permissions to run this command.`,
+                }
+            });
         if (!user || !user.bot) return message.channel.send(`Ping a **bot**.`);
         let bot = await Bots.findOne({botid: user.id}, { _id: false });
-
+        if(bot.certify === true)
+        return message.channel.send({
+            embed: {
+                color: 'RED',
+                description: `${message.author}, \`${bot.username}\` is already certify`,
+                timestamp: new Date(),
+            }
+        });
         const botUser = await this.client.users.fetch(user.id);
         if (bot.logo !== botUser.displayAvatarURL({format: "png", size: 256}))
             await Bots.updateOne({ botid: user.id }, {$set: { certify: true, logo: botUser.displayAvatarURL({format: "png", size: 256}) }});
@@ -45,7 +58,7 @@ module.exports = class extends Command {
             o.send(`Your bot \`${bot.username}\` / <@${bot.botid}> has been certified! :tada:.`)
         })
         message.guild.members.fetch(message.client.users.cache.find(u => u.id === bot.botid)).then(bot => {
-            bot.roles.set([role_ids.cert_bot, role_ids.bot]);
+            bot.roles.set([role_ids.cert_bot, role_ids.bot, role_ids.verified]);
         })
         message.channel.send(`Certified \`${bot.username}\``);
     }

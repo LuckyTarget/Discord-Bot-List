@@ -151,6 +151,7 @@ $( document ).ready(async function() {
             { name: 'tools', groups: [ 'tools' ] },
             { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
             { name: 'others', groups: [ 'others' ] },
+            { name: 'markdown', groups: [ 'markdown' ] },
             { name: 'about', groups: [ 'about' ] }
         ],
         uiColor: window.getComputedStyle(document.body).getPropertyValue('--background-2').replace(" ", ""),
@@ -231,12 +232,11 @@ $( document ).ready(async function() {
     $(document).on('click', '.selectMultiple', function(e) {
         $(this).toggleClass('open');
     });
-    
-    CKEDITOR.instances.longdesc.on('mode', () => {
-        let bg = window.getComputedStyle(document.body).getPropertyValue('--background-color')
-        let color = window.getComputedStyle(document.body).getPropertyValue('--color')
-        $(".cke_wysiwyg_frame ").contents().find('body').css({'background-color' : bg, color})
-        $(".cke_source ").css({'background-color' : bg, color})
-    })
+})
+
+CKEDITOR.on('instanceReady', () => {
+    let bg = window.getComputedStyle(document.body).getPropertyValue('--background-color')
+    let color = window.getComputedStyle(document.body).getPropertyValue('--color')
+    $(".cke_wysiwyg_frame ").contents().find('body').css({'background-color' : bg, color});;
 })
 CKEDITOR.disableAutoInline = true;

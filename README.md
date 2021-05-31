@@ -1,37 +1,27 @@
-# Welcome to Astra Bot List
+<p align="center">
+  <img src="https://media.discordapp.net/attachments/846824301676068874/847413435129135124/logo.png" width="300">
+</p>
 
-Astra Bot List is an open-source!nt branch may have newer additions/features, but is also potentially more buggy or even insecure. Use at your own risk. If you have any issues, check the FAQs first please.
+<p align="center">
+  <b>Welcome to Astra Bot List</b>
+</p>
+
+<p align="center">
+  Astra Bot List is an open-source!nt branch may have newer additions/features, but is also potentially more buggy or even insecure. Use at your own risk. If you have any issues, check the FAQs first please.
+</p>
 
 ### Website Preview [Website Link](https://astrabots.xyz/)
 ### Do you need help? Join our [Discord Server](https://astrabots.xyz/join)
 
-## New Features added!
-+ Footer Changed
-+ Readme Updated
-+ Some Home Screen Changes
-+ Navigation bar is fixed on all pages
-+ Theme color changed
-- Bot commands updated
-- Bot Theme Color Updated
-- Bot **certify**/**uncertify** added!
-
-**[Feature additions]**
-- Custom Bot's banner card
-- Custom Bot's page theme
-- Profile (**/me**) custom bio
-+ Bot Comments
-- Fixed navigation bugs
-
-
 # ScreenShots
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/39243722/119623542-f428c980-be10-11eb-90e1-79025102b715.png">
+  <img src="https://user-images.githubusercontent.com/39243722/120173269-8a436200-c20c-11eb-84cc-18115a4be76c.png">
 </p>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/39243722/119623605-04d93f80-be11-11eb-92f6-1c094c4096e6.png">
+  <img src="https://user-images.githubusercontent.com/39243722/120173403-acd57b00-c20c-11eb-8b2e-e5e3b09dcc69.png">
 </p>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/39243722/119623644-0efb3e00-be11-11eb-8165-8ba55c33f546.png">
+  <img src="https://user-images.githubusercontent.com/39243722/120173517-c5459580-c20c-11eb-96e3-2683d73c456f.png">
 </p>
 <p align="center">
   <img src="https://user-images.githubusercontent.com/39243722/119623679-191d3c80-be11-11eb-9191-5f8bbd8d7bbc.png">
