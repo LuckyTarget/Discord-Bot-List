@@ -61,7 +61,7 @@ include includes/nav.pug
 .bg-dark.hugething.text-center(style='box-shadow:0 5px 10px #1b1b1b;')
   br
   br
-  img.botlogoimg(style='width:100px;height:100px; border-radius:50%;', alt='Bot Avatar', src=bot.logo)
+  img.bot-img(src=bot.logo, height="150")
   br
   h1#fat.mb-0 #{bot.username}
   span #{bot.description}
@@ -86,6 +86,20 @@ br
           .btnicon-icon
             i.fas.fa-chevron-up
           span.btnicon-content Vote
+
+      .bot__options.w-100.mb-5
+        h5.mb-3
+          span.text-success.mr-1
+            i.fas.fa-image
+          | Custom banner
+        if (bot.banner)
+          <center>
+          img(style='width: 270px; height: 270ox;', src=bot.banner)
+        else
+          a.btn.btn.btn-block.btn-icon
+           .btnicon-icon
+            i.fas.fa-times
+           span.btnicon-content Banner Not Set
 
       .bot__tags.w-100.mb-5
           h5.mb-3
@@ -117,8 +131,6 @@ br
             span.float-right
               | #{bot.prefix}
 
-        
-
         .common__infocard.d-flex
           .common__infocard-icon.text-damp
             i.fas.fa-vote-yea
@@ -127,6 +139,18 @@ br
             span.float-right(href=`/bots/like/#{bot.botid}`)
               | #{bot.likes || 0}
 
+        .common__infocard.d-flex
+          .common__infocard-icon.text-damp
+            i.fas.fa-clock
+          span.common__infocard-content
+            b Servers
+            if (servers)
+              span.float-right
+                | #{`${servers} servers`}
+            else
+              span.float-right(href=`/bots/like/#{bot.botid}`)
+                | N/A
+        hr.mt-1.mb-3.bg-secondary
         .common__infocard.d-flex
           .common__infocard-icon.text-damp
               i.fas.fa-circle(class=botUser.presence.status)
@@ -171,17 +195,6 @@ br
             else
               span.float-right(href=`/bots/like/#{bot.botid}`)
                 | Disabled
-
-
-        if (servers)
-         .common__infocard.d-flex
-          .common__infocard-icon.text-damp
-            i.fas.fa-vote-yea
-          span.common__infocard-content
-            b Servers
-            span.float-right
-              | #{`${servers} servers`}
-
 
       #owners
       .bot__owners.w-100.mb-5
