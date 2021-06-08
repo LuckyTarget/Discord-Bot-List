@@ -173,7 +173,18 @@ br
         h5.mb-3
           span.text-warning.mr-1
             i.fad.fa-badge-check
-          |  Certified
+          |  Status
+        .common__infocard.d-flex
+          .common__infocard-icon.text-damp
+            i.fas.fa-check-circle
+          span.common__infocard-content
+            b Verified
+            if (bot.state === 'verified')
+              span.float-right(href=`/bots/like/#{bot.botid}`)
+                | Verified
+            else
+              span.float-right(href=`/bots/like/#{bot.botid}`)
+                | Unverified
         .common__infocard.d-flex
           .common__infocard-icon.text-damp
             i.fas.fa-badge-check
@@ -181,10 +192,10 @@ br
             b Certified
             if (bot.certify)
               span.float-right(href=`/bots/like/#{bot.botid}`)
-                | Enabled
+                | Certified
             else
               span.float-right(href=`/bots/like/#{bot.botid}`)
-                | Disabled
+                | Un-Certified
 
       #owners
       .bot__owners.w-100.mb-5
@@ -194,7 +205,7 @@ br
           |  Owner
         each person in owners
           a.btn.btn-dark.btn-block.btn-icon(href=`/user/${person.id}`)
-            img(src=person.tag !== 'Unknown User'  ? person.displayAvatarURL({format: "png", size: 256}) : '/assets/default-avatar.png')
+            img(src=person.tag !== 'Unknown User'  ? person.displayAvatarURL({format: "png", size: 256, dynamic: true}) : '/assets/default-avatar.png')
             span.btnicon-content
               | #{person.username}
               small.text-muted ##{person.discriminator}
@@ -204,6 +215,11 @@ br
           span.text-danger.mr-1
             i.fas.fa-link
           |  Links
+        a.btn.btn-blue.btn-block.btn-icon(target='_blank' href=`/bots/${bot.botid}/botinfo`)
+              .btnicon-icon
+                i.fas.fa-stream
+              span.btnicon-content Api
+        <br /><br />
         if (bot.github)
           a.btn.btn-blue.btn-block.btn-icon(target='_blank' href=`${bot.github}`)
            .btnicon-icon

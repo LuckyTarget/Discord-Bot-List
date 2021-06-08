@@ -1,18 +1,16 @@
-const { Command, Timestamp } = require('klasa');
+const { Command } = require('klasa');
 const { MessageEmbed } = require('discord.js');
 const Bots = require("@models/bots");
-const Users = require("@models/users");
-const { server: { mod_log_id, role_ids, admin_user_ids } } = require("@root/config.json");
 const perms = require("@root/config.json");
+const { server: { mod_log_id, role_ids } } = require("@root/config.json");
+
 var modLog;
 
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
-      name: 'certify',
-      runIn: ['text'],
-      description: "Certify a bot",
-      usage: '[User:user]'
+      usage: '[User:user]',
+      description: "Approve a bot"
     });
   }
 
@@ -21,9 +19,10 @@ module.exports = class extends Command {
       return message.channel.send({
         embed: {
           color: 'RED',
-          description: `${message.author}, You do not have enough permissions to run this command.`
+          description: `${message.author}, You do not have enough permissions to run this command.`,
         }
       });
+      
     if (!user || !user.bot) return message.channel.send(`Ping a **bot**.`);
     let bot = await Bots.findOne({ botid: user.id }, { _id: false });
 
@@ -31,46 +30,47 @@ module.exports = class extends Command {
       return message.channel.send({
         embed: {
           color: 'RED',
-          thumpbnail: message.guild.iconURL,
-          description: `This bot is not on our botlist`,
+          description: `this bot is not on our botlist`,
         }
       });
 
-    if (bot.certify === true)
+    if (bot.state === 'verified')
       return message.channel.send({
         embed: {
           color: 'RED',
-          description: `${message.author}, \`${bot.username}\` is already certify`,
+          description: `${message.author}, \`${bot.username}\` is already verified`,
         }
       });
+
     const botUser = await this.client.users.fetch(user.id);
     if (bot.logo !== botUser.displayAvatarURL({ format: "png", size: 256 }))
-      await Bots.updateOne({ botid: user.id }, { $set: { certify: true, logo: botUser.displayAvatarURL({ format: "png", size: 256 }) } });
+      await Bots.updateOne({ botid: user.id }, { $set: { state: "verified", logo: botUser.displayAvatarURL({ format: "png", size: 256 }) } });
     else
-      await Bots.updateOne({ botid: user.id }, { $set: { certify: true } })
+      await Bots.updateOne({ botid: user.id }, { $set: { state: "verified" } })
 
     let owners = [bot.owners.primary].concat(bot.owners.additional)
     let e = new MessageEmbed()
-      .setTitle('Bot Certified')
+      .setTitle('Bot Approved')
       .addField(`Bot`, `<@${bot.botid}>`, true)
       .addField(`Owner(s)`, owners.map(x => x ? `<@${x}>` : ""), true)
-      .addField("Mod", message.author, true)
+      .addField("Reviewer", message.author, true)
       .setThumbnail(botUser.displayAvatarURL({ format: "png", size: 256 }))
       .setColor(0x26ff00)
     modLog.send(e);
     modLog.send(owners.map(x => x ? `<@${x}>` : "")).then(m => { m.delete() });
+
     owners = await message.guild.members.fetch({ user: owners })
     owners.forEach(o => {
-      Users.updateOne({ userid: o.id }, { $set: { certdev: true } }).then();
-      o.roles.add(message.guild.roles.cache.get(role_ids.cert_user));
-      o.send(`Your bot \`${bot.username}\` / <@${bot.botid}> has been certified! :tada:.`)
+      o.roles.add(message.guild.roles.cache.get(role_ids.bot_developer));
+      o.send(`Your bot <@${bot.botid}> has been approved! :data:`)
     })
     message.guild.members.fetch(message.client.users.cache.find(u => u.id === bot.botid)).then(bot => {
-      bot.roles.set([role_ids.cert_bot, role_ids.bot, role_ids.verified]);
+      bot.roles.set([role_ids.bot, role_ids.verified]);
     })
-    message.channel.send(`Certified \`${bot.username}\``);
+    message.channel.send(`Approved \`${bot.username}\``);
   }
+
   async init() {
-    modLog = this.client.channels.cache.get(mod_log_id);
+    modLog = await this.client.channels.fetch(mod_log_id);
   }
 };

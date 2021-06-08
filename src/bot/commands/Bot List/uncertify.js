@@ -28,49 +28,34 @@ module.exports = class extends Command {
   }
 
   async run(message, [user]) {
-    if (!perms.server.botreviewer.includes(message.author.id)) 
-    return message.channel.send({
-            embed: {
-                color: 'RED',
-                description: `${message.author}, You do not have enough permissions to run this command.`,
-                timestamp: new Date(),
-            }
-        });
-
-
-
-
+    if (!perms.server.botreviewer.includes(message.author.id))
+      return message.channel.send({
+        embed: {
+          color: 'RED',
+          description: `${message.author}, You do not have enough permissions to run this command.`,
+        }
+      });
 
     //if (!admin_user_ids.includes(message.author.id)) return
 
-
-
-
-
-
-
-
-
     if (!user || !user.bot) return message.channel.send(`Ping a **bot**.`);
 
-   
     let bot = await Bots.findOne({ botid: user.id }, { _id: false });
-    if(bot === null)
-    return message.channel.send({
+    if (bot === null)
+      return message.channel.send({
         embed: {
-            color: 'RED',
-            description: `${message.author} This bot is not on our botlist`,
+          color: 'RED',
+          description: `${message.author} This bot is not on our botlist`,
         }
-    });
+      });
 
-    if(bot.certify === false)
-    return message.channel.send({
+    if (bot.certify === false)
+      return message.channel.send({
         embed: {
-            color: 'RED',
-            description: `${message.author}, \`${bot.username}\` is already un-certify`,
+          color: 'RED',
+          description: `${message.author}, \`${bot.username}\` is already un-certify`,
         }
-    });
-
+      });
 
     const botUser = await this.client.users.fetch(user.id);
     if (bot.logo !== botUser.displayAvatarURL({ format: "png", size: 256 }))
@@ -89,12 +74,6 @@ module.exports = class extends Command {
     modLog.send(e);
     modLog.send(owners.map(x => x ? `<@${x}>` : "")).then(m => { m.delete() });
 
-
-
-
-
-
-
     owners = await message.guild.members.fetch({ user: owners })
     owners.forEach(o => {
       Users.updateOne({ userid: o.id }, { $set: { certdev: 0 } }).then();
@@ -105,14 +84,7 @@ module.exports = class extends Command {
       bot.roles.set([role_ids.bot, role_ids.verified]);
     })
     message.channel.send(`Uncertified \`${bot.username}\``);
-
-
-
-
-
-
   }
-
 
   async init() {
     modLog = this.client.channels.cache.get(mod_log_id);
